@@ -1,0 +1,7 @@
+{
+  "name": "Sets_Solution",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
