@@ -1,20 +1,139 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Basic Set Operations
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-grid>
+    <ion-row class="inputButtons ion-justify-content-center">        
+      <ion-button (click)="showSetA()">Set A</ion-button>
+      <ion-button (click)="showSetB()">Set B</ion-button>
+      <ion-button (click)="showSetU()">Set U</ion-button>
+      <ion-button (click)="clearAll()">Reset</ion-button>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-item *ngIf="setA" class="input">
+        <ion-label>A =</ion-label>
+        <ion-input [(ngModel)]="setAinput"></ion-input>
+        <ion-button (click)="saveElementOfA()">Save</ion-button>
+      </ion-item>
+
+      <ion-item *ngIf="setB" class="input">
+        <ion-label>B =</ion-label>
+        <ion-input [(ngModel)]="setBinput"></ion-input>
+        <ion-button (click)="saveElementOfB()">Save</ion-button>
+      </ion-item>
+
+      <ion-item *ngIf="setUni" class="input">
+        <ion-label>U =</ion-label>
+        <ion-input [(ngModel)]="setUniInput"></ion-input>
+        <ion-button (click)="saveElementOfUni()">Save</ion-button>
+      </ion-item>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-list class="outputList ion-no-padding ion-text-center">
+        <ion-item class="ion-no-padding">
+          <ion-label class="ion-no-margin">Set A = </ion-label>
+          <ion-input *ngIf="elementsOfA" disabled>{{filteredArrayA}}</ion-input>
+        </ion-item>
+        <ion-button (click)="showElementsOfA()">Show A Elements</ion-button>
+
+        <ion-item class="ion-no-padding">
+          <ion-label class="ion-no-margin">Set A' = </ion-label>
+          <ion-input *ngIf="compliAResult" disabled>{{complimentAResult}}</ion-input>
+        </ion-item>
+        <ion-button (click)="complimantA()">Show A'</ion-button>
+
+        <ion-item class="ion-no-padding">
+          <ion-label class="ion-no-margin">Set B = </ion-label>
+          <ion-input *ngIf="elementsOfB" disabled>{{filteredArrayB}}</ion-input>
+        </ion-item>
+        <ion-button (click)="showElementsOfB()">Show B Elements</ion-button>
+
+        <ion-item class="ion-no-padding">
+          <ion-label class="ion-no-margin">Set B' = </ion-label>
+          <ion-input *ngIf="compliBResult" disabled>{{complimentBResult}}</ion-input>
+        </ion-item>
+        <ion-button (click)="complimantB()">Show B'</ion-button>
+
+        <ion-item class="ion-no-padding">
+          <ion-label class="ion-no-margin">Set U = </ion-label>
+          <ion-input *ngIf="elementsOfU" disabled>{{filteredArrayUni}}</ion-input>
+        </ion-item>
+        <ion-button (click)="showElementsOfU()">Show U Elements</ion-button>
+      </ion-list>
+    </ion-row>
+
+    <ion-row class="ion-padding">
+      <ion-item *ngIf="AuB">
+        <ion-label><b>Result = </b></ion-label>
+        <p class="ion-padding">A∪B: {{unionResult}}</p>
+      </ion-item>
+
+      <ion-item *ngIf="aCompUB">
+        <ion-label><b>Result = </b></ion-label>
+        <p class="ion-padding">A'∪B: {{unionResult}}</p>
+      </ion-item>
+
+      <ion-item *ngIf="AUBCopm">
+        <ion-label><b>Result = </b></ion-label>
+        <p class="ion-padding">A∪B': {{unionResult}}</p>
+      </ion-item>
+
+      <ion-item *ngIf="ACompUBComp">
+        <ion-label><b>Result = </b></ion-label>
+        <p class="ion-padding">A'∪B': {{unionResult}}</p>
+      </ion-item>
+
+      <ion-item *ngIf="AiB">
+        <ion-label><b>Result = </b></ion-label>
+        <p class="ion-padding">A∩B: {{intersectionResult}}</p>
+      </ion-item>
+
+      <ion-item *ngIf="aCompIB">
+        <ion-label><b>Result = </b></ion-label>
+        <p class="ion-padding">A'∩B: {{intersectionResult}}</p>
+      </ion-item>
+
+      <ion-item *ngIf="AIBCopm">
+        <ion-label><b>Result = </b></ion-label>
+        <p class="ion-padding">A∩B': {{intersectionResult}}</p>
+      </ion-item>
+
+      <ion-item *ngIf="ACompIBComp">
+        <ion-label><b>Result = </b></ion-label>
+        <p class="ion-padding">A'∩B': {{intersectionResult}}</p>
+      </ion-item>
+    </ion-row>
+
+    <ion-row class="buttons">
+      <ion-col>
+        <ion-button (click)="union()">A∪B</ion-button>
+        <ion-button (click)="aCompUbComp()">A'∪B'</ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button (click)="aCompUb()">A'∪B</ion-button>
+        <ion-button (click)="aUbComp()">A∪B'</ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button (click)="intersection()">A∩B</ion-button>
+        <ion-button (click)="aCompIbComp()">A'∩B'</ion-button>
+        
+      </ion-col>
+
+      <ion-col>
+        <ion-button (click)="aCompIb()">A'∩B</ion-button>
+        <ion-button (click)="aIbComp()">A∩B'</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
